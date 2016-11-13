@@ -8208,7 +8208,6 @@ class basic_json
                 }
 
                 exp += (negative_exp_sign ? -count : count);
-
                 // round to INF if our exponent is larger than representable number
                 if (exp > std::numeric_limits<long double>::max_exponent10)
                 {

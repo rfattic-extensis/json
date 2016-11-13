@@ -9497,9 +9497,9 @@ basic_json_parser_93:
                 cp = *++str;
 
                 // whether the exponent is negative
-                const bool negative_exp = (cp == '-');
+                const bool negative_exp_sign = (cp == '-');
                 // skip sign
-                if (negative_exp or cp == '+')
+                if (negative_exp_sign or cp == '+')
                 {
                     cp = *++str;
                 }
@@ -9521,8 +9521,7 @@ basic_json_parser_93:
                     }
                 }
 
-                exp += (negative_exp ? -count : count);
-
+                exp += (negative_exp_sign ? -count : count);
                 // round to INF if our exponent is larger than representable number
                 if (exp > std::numeric_limits<long double>::max_exponent10)
                 {
