@@ -9435,7 +9435,7 @@ basic_json_parser_93:
         Microsoft in 1252 codepage and others may classify additional
         single-byte characters as digits using std::isdigit.
         */
-        constexpr bool nl_isdigit(const char c) const
+        static constexpr bool nl_isdigit(const char c)
         {
             return c >= '0' and c <= '9';
         }
@@ -9450,10 +9450,11 @@ basic_json_parser_93:
 
         @return the floating point number
         */
-        long double strtojnum(const char* str) const
+        static long double strtojnum(const char* str)
         {
             long double result = 0;
 
+            // the current character
             char cp = *str;
 
             // exponent
@@ -9461,17 +9462,17 @@ basic_json_parser_93:
 
             // whether the parsed number is negative
             const bool negative_sign = (cp == '-');
-            // skip minus
+
+            // skip the minus sign
             if (negative_sign)
             {
                 ++str;
             }
 
-            // read in fractional part of number
-            while (nl_isdigit(cp = *str))
+            // read fractional part of number
+            for (; nl_isdigit(cp = *str); ++str)
             {
                 result = result * 10 + (cp - '0');
-                ++str;
             }
 
             // count digits after decimal point
@@ -9498,36 +9499,32 @@ basic_json_parser_93:
                 // whether the exponent is negative
                 const bool negative_exp = (cp == '-');
                 // skip sign
-                if (cp == '-' or cp == '+')
+                if (negative_exp or cp == '+')
                 {
                     cp = *++str;
                 }
 
                 // exponent calculation
                 int count = 0;
-
-                while (nl_isdigit(cp))
+                for (count = 0; nl_isdigit(cp); cp = *++str)
                 {
                     constexpr auto imax = std::numeric_limits<int>::max();
 
                     if ((imax - std::abs(exp) - (cp - '0')) / 10 > count)
                     {
-                        count *= 10;
-                        count += cp - '0';
+                        count = count * 10 + (cp - '0');
                     }
                     else
                     {
                         count = imax - exp;
                         break;
                     }
-
-                    cp = *++str;
                 }
 
                 exp += (negative_exp ? -count : count);
             }
 
-            // adjust number by powers of ten specified by format and exponent.
+            // adjust number by powers of ten specified by format and exponent
             constexpr std::array<long double, 9> powerof10 =
             {
                 {1.e1L, 1.e2L, 1.e4L, 1.e8L, 1.e16L, 1.e32L, 1.e64L, 1.e128L, 1.e256L}
@@ -9674,8 +9671,9 @@ basic_json_parser_93:
             else
             {
                 // convert string by json number format to floating point
-                result.m_value.number_float = strtojnum(reinterpret_cast<typename string_t::const_pointer>
-                                                        (m_start));
+                result.m_value.number_float = static_cast<number_float_t>(strtojnum(
+                                                  reinterpret_cast<typename string_t::const_pointer>
+                                                  (m_start)));
 
                 // replace infinity and NAN by null
                 if (not std::isfinite(result.m_value.number_float))
