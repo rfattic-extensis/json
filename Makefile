@@ -85,7 +85,8 @@ pretty:
 	   --align-reference=type --add-brackets --convert-tabs --close-templates \
 	   --lineend=linux --preserve-date --suffix=none --formatted \
 	   src/json.hpp src/json.hpp.re2c test/src/*.cpp \
-	   benchmarks/benchmarks.cpp doc/examples/*.cpp
+	   benchmarks/benchmarks.cpp benchmarks/benchmarks_nonius.cpp \
+	   doc/examples/*.cpp
 
 
 ##########################################################################
@@ -97,6 +98,9 @@ json_benchmarks: benchmarks/benchmarks.cpp benchmarks/benchpress.hpp benchmarks/
 	cd benchmarks/files/numbers ; python generate.py
 	$(CXX) -std=c++11 -pthread $(CXXFLAGS) -DNDEBUG -O3 -flto -I src -I benchmarks $< $(LDFLAGS) -o $@
 	./json_benchmarks
+
+benchmarks_nonius: benchmarks/benchmarks_nonius.cpp
+	$(CXX) -std=c++11 $(CXXFLAGS) -DNDEBUG -O3 -flto -I src -I benchmarks $< $(LDFLAGS) -o $@	
 
 
 ##########################################################################
