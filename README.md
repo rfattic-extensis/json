@@ -3,6 +3,7 @@
 [![Build Status](https://travis-ci.org/nlohmann/json.svg?branch=master)](https://travis-ci.org/nlohmann/json)
 [![Build Status](https://ci.appveyor.com/api/projects/status/1acb366xfyg3qybk/branch/develop?svg=true)](https://ci.appveyor.com/project/nlohmann/json)
 [![Coverage Status](https://img.shields.io/coveralls/nlohmann/json.svg)](https://coveralls.io/r/nlohmann/json)
+[![Coverity Scan Build Status](https://scan.coverity.com/projects/5550/badge.svg)](https://scan.coverity.com/projects/nlohmann-json)
 [![Try online](https://img.shields.io/badge/try-online-blue.svg)](http://melpon.org/wandbox/permlink/fsf5FqYe6GoX68W6)
 [![Documentation](https://img.shields.io/badge/docs-doxygen-blue.svg)](http://nlohmann.github.io/json)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/nlohmann/json/master/LICENSE.MIT)
@@ -423,14 +424,11 @@ The following compilers are currently used in continuous integration at [Travis]
 | Clang 3.7.1     | Ubuntu 14.04.4 LTS           | clang version 3.7.1 (tags/RELEASE_371/final) |
 | Clang 3.8.0     | Ubuntu 14.04.4 LTS           | clang version 3.8.0 (tags/RELEASE_380/final) |
 | Clang 3.8.1     | Ubuntu 14.04.4 LTS           | clang version 3.8.1 (tags/RELEASE_381/final) |
-| Clang Xcode 6.1 | Darwin Kernel Version 13.4.0 (OSX 10.9.5) | Apple LLVM version 6.0 (clang-600.0.54) (based on LLVM 3.5svn) |
-| Clang Xcode 6.2 | Darwin Kernel Version 13.4.0 (OSX 10.9.5) | Apple LLVM version 6.0 (clang-600.0.57) (based on LLVM 3.5svn) |
-| Clang Xcode 6.3 | Darwin Kernel Version 14.3.0 (OSX 10.10.3) | Apple LLVM version 6.1.0 (clang-602.0.49) (based on LLVM 3.6.0svn) |
 | Clang Xcode 6.4 | Darwin Kernel Version 14.3.0 (OSX 10.10.3) | Apple LLVM version 6.1.0 (clang-602.0.53) (based on LLVM 3.6.0svn) |
-| Clang Xcode 7.1 | Darwin Kernel Version 14.5.0 (OSX 10.10.5) | Apple LLVM version 7.0.0 (clang-700.1.76) |
-| Clang Xcode 7.2 | Darwin Kernel Version 15.0.0 (OSX 10.10.5) | Apple LLVM version 7.0.2 (clang-700.1.81) |
 | Clang Xcode 7.3 | Darwin Kernel Version 15.0.0 (OSX 10.10.5) | Apple LLVM version 7.3.0 (clang-703.0.29) |
+| Clang Xcode 8.0 | Darwin Kernel Version 15.6.0 | Apple LLVM version 8.0.0 (clang-800.0.38) |
 | Clang Xcode 8.1 | Darwin Kernel Version 16.1.0 (macOS 10.12.1) | Apple LLVM version 8.0.0 (clang-800.0.42.1) |
+| Clang Xcode 8.2 | Darwin Kernel Version 16.1.0 (macOS 10.12.1) | Apple LLVM version 8.0.0 (clang-800.0.42.1) |
 | Visual Studio 14 2015 | Windows Server 2012 R2 (x64) | Microsoft (R) Build Engine version 14.0.25123.0 | 
 
 
@@ -499,6 +497,9 @@ I deeply appreciate the help of the following people.
 - [ChristophJud](https://github.com/ChristophJud) overworked the CMake files to ease project inclusion.
 - [Vladimir Petrigo](https://github.com/vpetrigo) made a SFINAE hack more readable.
 - [Denis Andrejew](https://github.com/seeekr) fixed a grammar issue in the README file.
+- [Pierre-Antoine Lacaze](https://github.com/palacaze) found a subtle bug in the `dump()` function.
+- [TurpentineDistillery](https://github.com/TurpentineDistillery) pointed to [`std::locale::classic()`](http://en.cppreference.com/w/cpp/locale/locale/classic) to avoid too much locale joggling.
+- [cgzones](https://github.com/cgzones) had an idea how to fix the Coverity scan.
 
 Thanks a lot for helping out!
 
